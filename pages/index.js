@@ -28,8 +28,7 @@ const bodies = [
 ];
 export default function Home() {
   const router = useRouter();
-  const mount = useRef(false);
-  var renderer, scene, camera, gltfModel,starMesh, bloomComposer;
+  var renderer, scene, camera, gltfModel, starMesh, bloomComposer;
 
   const animate = () => {
     renderer.render(scene, camera);
@@ -66,17 +65,14 @@ export default function Home() {
     starMesh = new THREE.Mesh(starGeometry, starMaterial);
     scene.add(starMesh);
 
-    animate()
-
+    animate();
   };
 
   useEffect(() => {
-    if (mount.current) {
-      init();
-    } else mount.current = true;
+    init();
     document.querySelector(".container").classList.remove("animate");
     document.querySelector(".title").innerText = "To Infinity";
-  }, [mount.current]);
+  }, []);
 
   return (
     <>

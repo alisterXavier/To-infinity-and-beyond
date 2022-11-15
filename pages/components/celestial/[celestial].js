@@ -16,7 +16,6 @@ var renderer, scene, camera, starMesh, gltfModel, bloomComposer, loader;
 const Moon = () => {
   const router = useRouter();
   const [click, setClick] = useContext(navClick)
-  const mount = useRef(false);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [celestialType, setCelestialType] = useState(
@@ -277,12 +276,11 @@ const Moon = () => {
   };
 
   useEffect(() => {
-    if (mount.current && celestialType) {
+    if (celestialType) {
       getData();
       init();
       loadCelestialBody();
     } else {
-      mount.current = true;
       setCelestialType(sessionStorage.getItem("celestial"));
     }
     document.querySelector(".container").classList.remove("animate");
