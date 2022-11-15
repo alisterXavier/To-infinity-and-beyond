@@ -11,11 +11,10 @@ import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import wiki from "wikijs";
 import { navClick } from "../../_app";
 
-
 var renderer, scene, camera, starMesh, gltfModel, bloomComposer, loader;
 const Moon = () => {
   const router = useRouter();
-  const [click, setClick] = useContext(navClick)
+  const [click, setClick] = useContext(navClick);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [celestialType, setCelestialType] = useState(
@@ -197,7 +196,7 @@ const Moon = () => {
     const wData = await wiki()
       .page(celestialType)
       .then((page) => page.summary());
-
+    console.log(wData);
     setData(wData.split("\n"));
   };
 
@@ -271,8 +270,8 @@ const Moon = () => {
   };
 
   const toggleData = (e) => {
-    const {parentElement} = e.target
-    parentElement.classList.toggle("unactive")
+    const { parentElement } = e.target;
+    parentElement.classList.toggle("unactive");
   };
 
   useEffect(() => {
@@ -287,14 +286,14 @@ const Moon = () => {
     document.querySelector(".title").innerText = "And Beyond";
   }, [celestialType]);
 
-  useEffect(()=> {
-    if(click){
-      while(scene.children.length > 0){ 
-        scene.remove(scene.children[0]); 
+  useEffect(() => {
+    if (click) {
+      while (scene.children.length > 0) {
+        scene.remove(scene.children[0]);
+      }
+      setClick(false);
     }
-      setClick(false)
-    }
-  },[click])
+  }, [click]);
 
   return (
     <div className="model-container absolute w-full h-full top-0 z-10">
@@ -303,7 +302,10 @@ const Moon = () => {
         {celestialType}
       </div>
       <div className={`${celestialType} data flex items-center justify-around`}>
-        <div className="text-3xl cursor-pointer arrow px-3" onClick={toggleData}>
+        <div
+          className="text-3xl cursor-pointer arrow px-3"
+          onClick={toggleData}
+        >
           &gt;
         </div>
         <div className="data-wrapper">
