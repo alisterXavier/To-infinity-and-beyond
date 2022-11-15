@@ -26,9 +26,10 @@ const bodies = [
   "blackhole",
   "DeathStar",
 ];
+
+var renderer, scene, camera, gltfModel, starMesh, bloomComposer;
 export default function Home() {
   const router = useRouter();
-  var renderer, scene, camera, gltfModel, starMesh, bloomComposer;
 
   const animate = () => {
     renderer.render(scene, camera);
@@ -38,6 +39,7 @@ export default function Home() {
   };
 
   const init = () => {
+    console.log("dd")
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(
