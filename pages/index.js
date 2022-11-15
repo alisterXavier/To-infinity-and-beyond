@@ -76,7 +76,7 @@ export default function Home() {
     } else mount.current = true;
     document.querySelector(".container").classList.remove("animate");
     document.querySelector(".title").innerText = "To Infinity";
-  }, []);
+  }, [mount.current]);
 
   return (
     <>
