@@ -203,9 +203,6 @@ const Moon = () => {
   const loadCelestialBody = () => {
     const draco = new DRACOLoader();
     loader = new GLTFLoader();
-    draco.setDecoderPath('../draco/')
-    
-    loader.setDRACOLoader(draco)
 
     loader.load(`../../assets/Models/${celestialType}/blackhole2.0.glb`, (gltf) => {
       gltfModel = gltf.scene;
