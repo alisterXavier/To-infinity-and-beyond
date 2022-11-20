@@ -10,16 +10,15 @@ import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { nav } from "../../_app";
 import Info from "./celestialInfo.json";
 
+var renderer,
+  scene,
+  camera,
+  starMesh,
+  gltfModel,
+  bloomComposer,
+  loader,
+  orbitControls;
 const Moon = () => {
-  var renderer,
-    scene,
-    camera,
-    starMesh,
-    gltfModel,
-    bloomComposer,
-    loader,
-    orbitControls;
-
   const router = useRouter();
   const { ClickEvent, Title } = useContext(nav);
   const [click, setClick] = ClickEvent;
