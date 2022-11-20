@@ -203,7 +203,7 @@ const Moon = () => {
   const loadCelestialBody = () => {
     loader = new GLTFLoader();
 
-    loader.load(`../../assets/Models/${celestialType}/scene.gltf`, (gltf) => {
+    loader.load(`../../assets/Models/${celestialType}/scene.glb`, (gltf) => {
       gltfModel = gltf.scene;
       scene.add(gltf.scene);
       renderer.render(scene, camera);
