@@ -277,6 +277,7 @@ const Moon = () => {
 
   useEffect(() => {
     if (celestialType) {
+      console.log("qwerty")
       getData();
       init();
       loadCelestialBody();
