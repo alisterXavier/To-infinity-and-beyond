@@ -9,6 +9,7 @@ import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js"
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { nav } from "../../_app";
 import Info from "./celestialInfo.json";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 var renderer,
   scene,
@@ -22,7 +23,7 @@ const Moon = () => {
   const router = useRouter();
   const { ClickEvent, Title } = useContext(nav);
   const [click, setClick] = ClickEvent;
-  const [celestialType, setCelestialType] = useState(router?.query.celestial);
+  const [celestialType, setCelestialType] = Title;
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -200,10 +201,13 @@ const Moon = () => {
   };
 
   const loadCelestialBody = () => {
-    console.log("load");
+    const draco = new DRACOLoader();
     loader = new GLTFLoader();
-    loader.load(`../../assets/Models/${celestialType}/scene.gltf`, (gltf) => {
-      console.log("enter");
+    draco.setDecoderPath('../draco/')
+    
+    loader.setDRACOLoader(draco)
+
+    loader.load(`../../assets/Models/${celestialType}/blackhole2.0.glb`, (gltf) => {
       gltfModel = gltf.scene;
       scene.add(gltf.scene);
       renderer.render(scene, camera);
@@ -299,12 +303,15 @@ const Moon = () => {
 
   return (
     <div
-      className={`model-container  absolute w-full h-full top-0 z-10`}
+      className={`model-container ${
+        isLoading && "flex items-center justify-center"
+      } absolute w-full h-full top-0 z-10`}
     >
       <div
         id="canvas"
-        className={`canvas absolute`}
+        className={`canvas absolute ${isLoading && "hidden"}`}
       ></div>
+      {!isLoading ? (
         <div
           className={`${celestialType} data flex items-center flex-col justify-around`}
         >
@@ -333,6 +340,23 @@ const Moon = () => {
             )}
           </div>
         </div>
+      ) : (
+        <div className="infinity-loader flex">
+          <div className="parts">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

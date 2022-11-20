@@ -26,11 +26,7 @@ a {
  -moz-user-select: none; /* Firefox */
  -ms-user-select: none; /* Internet Explorer/Edge */
 }
-@import url('https://fonts.cdnfonts.com/css/the-brigade');
-@font-face {
-  font-family: "Blaa";
-  src: url('/assets/fonts/UrbanCaseRegular.otf');
-}
+
 @font-face {
   font-family: "Blaa1";
   src: url('/assets/fonts/AstroSpace.otf');
