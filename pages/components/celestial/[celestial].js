@@ -313,7 +313,7 @@ const Celestial = () => {
           className={`${celestialType} data flex items-center flex-col justify-around p-2 lg:p-5`}
         >
           <div
-            className="text-3xl cursor-pointer arrow lg:px-3"
+            className="text-3xl cursor-pointer arrow p-5 flex justify-center items-center"
             onClick={toggleData}
           >
             &gt;
