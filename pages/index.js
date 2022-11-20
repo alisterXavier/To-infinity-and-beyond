@@ -11,21 +11,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
-
-const bodies = [
-  "Earth",
-  "Moon",
-  "Sun",
-  "Mercury",
-  "Mars",
-  "Venus",
-  "Jupiter",
-  "Saturn",
-  "Neptune",
-  "Uranus",
-  "blackhole",
-  "DeathStar",
-];
+import axios from "axios";
+import bodies from './components/celestial/bodies.json' 
 
 var renderer, scene, camera, gltfModel, starMesh, bloomComposer;
 export default function Home() {
@@ -33,13 +20,12 @@ export default function Home() {
 
   const animate = () => {
     renderer.render(scene, camera);
-    starMesh.rotation.y += 0.001;
-    starMesh.rotation.x += 0.001;
+    starMesh.rotation.y -= 0.001;
+    starMesh.rotation.x -= 0.001;
     requestAnimationFrame(animate);
   };
 
   const init = () => {
-    console.log("dd")
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(
@@ -78,14 +64,8 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <link
-          href="https://fonts.cdnfonts.com/css/ac-big-serif"
-          rel="stylesheet"
-        ></link>
-      </Head>
       <div id="canvas">
-        <div className="wrapper flex flex-wrap mt-10">
+        <div className="wrapper flex flex-wrap justify-center my-10">
           {bodies.map((b) => (
             <div
               key={b}

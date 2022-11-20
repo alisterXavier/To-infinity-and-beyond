@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -8,18 +7,25 @@ import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
-import wiki from "wikijs";
-import { navClick } from "../../_app";
+import { nav } from "../../_app";
+import Info from "./celestialInfo.json";
 
-var renderer, scene, camera, starMesh, gltfModel, bloomComposer, loader;
+var renderer,
+  scene,
+  camera,
+  starMesh,
+  gltfModel,
+  bloomComposer,
+  loader,
+  orbitControls;
+
 const Moon = () => {
   const router = useRouter();
-  const [click, setClick] = useContext(navClick);
+  const { ClickEvent, Title } = useContext(nav);
+  const [click, setClick] = ClickEvent;
+  const [celestialType, setCelestialType] = Title;
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [celestialType, setCelestialType] = useState(
-    router.query.celestial?.toLowerCase()
-  );
 
   const extraLoaders = {
     stars: () => {
@@ -86,7 +92,6 @@ const Moon = () => {
       scene.add(points);
     },
     moon: () => {
-      gltfModel.position.set(-0.5, 0.01, 0);
       gltfModel.scale.set(1.2, 1.2, 1.2);
 
       const alight = new THREE.AmbientLight(0x7e7e7e, 0.5); // soft white light
@@ -97,22 +102,22 @@ const Moon = () => {
       scene.add(light);
     },
     sun: () => {
-      camera.position.set(0, 0, 10);
-
-      gltfModel.position.set(-4.5, 1, 0);
+      camera.position.set(0, 0, 50);
+      orbitControls.minDistance = 10;
       gltfModel.scale.set(0.003, 0.003, 0.003);
     },
     earth: () => {
-      gltfModel.position.set(-0.6, 0.1, 0);
-      gltfModel.scale.set(0.005, 0.005, 0.005);
+      gltfModel.scale.set(0.004, 0.004, 0.004);
 
-      var light = new THREE.PointLight(0xc4c4c4, 3.5);
-      light.position.set(0.6, -0.1, 0.5);
+      var light = new THREE.DirectionalLight(0xc4c4c4, 0.5);
+      light.position.set(0, 0, 5);
       scene.add(light);
+
+      var alight = new THREE.AmbientLight(0xc4c4c4, 2.2);
+      scene.add(alight);
     },
     mercury: () => {
-      gltfModel.scale.set(0.07, 0.07, 0.07);
-      gltfModel.position.set(0.4, -0.1, 0);
+      gltfModel.scale.set(0.04, 0.04, 0.04);
       const alight = new THREE.AmbientLight(0x7e7e7e, 3.5); // soft white light
       scene.add(alight);
       var light = new THREE.PointLight(0xc4c4c4, 1.5);
@@ -120,14 +125,13 @@ const Moon = () => {
       scene.add(light);
     },
     venus: () => {
-      gltfModel.scale.set(0.007, 0.007, 0.007);
-      gltfModel.position.set(-0.9, 0.2, 0);
+      gltfModel.scale.set(0.004, 0.004, 0.004);
 
-      var alight = new THREE.AmbientLight(0xc4c4c4, 0.2);
+      var alight = new THREE.AmbientLight(0xc4c4c4, 0.3);
       scene.add(alight);
 
-      var light = new THREE.PointLight(0xc4c4c4, 3.5);
-      light.position.set(0.2, -0.2, 0);
+      var light = new THREE.PointLight(0xc4c4c4, 1.8);
+      light.position.set(0, 0, 2);
       scene.add(light);
     },
     mars: () => {
@@ -141,16 +145,15 @@ const Moon = () => {
       scene.add(alight);
     },
     jupiter: () => {
-      gltfModel.position.set(-0.8, 0.2, 0);
-      gltfModel.scale.set(0.001, 0.001, 0.001);
+      gltfModel.scale.set(0.0006, 0.0006, 0.0006);
       var light = new THREE.PointLight(0xc4c4c4, 3.5);
-      light.position.set(0.5, -0.2, 0);
+      light.position.set(0.5, 0, 1);
       scene.add(light);
-      const alight = new THREE.AmbientLight(0x7e7e7e, 0.5); // soft white light
+      const alight = new THREE.AmbientLight(0x7e7e7e, 0.8); // soft white light
       scene.add(alight);
     },
     saturn: () => {
-      gltfModel.position.set(0.2, 0.2, 0);
+      gltfModel.position.set(0.2, 0, 0);
       gltfModel.rotation.set(0, -2, 0);
       gltfModel.scale.set(0.5, 0.5, 0.5);
       var light = new THREE.PointLight(0xc4c4c4, 2.5);
@@ -168,13 +171,13 @@ const Moon = () => {
       scene.add(light);
     },
     neptune: () => {
-      camera.position.set(0, 0, 10);
+      camera.position.set(0, 0, 30);
       gltfModel.position.set(2.5, -0.5, 0);
       gltfModel.scale.set(0.2, 0.2, 0.2);
       var alight = new THREE.AmbientLight(0xc4c4c4, 0.05);
       scene.add(alight);
-      var light = new THREE.PointLight(0xc4c4c4, 2);
-      light.position.set(-8, 4, -5);
+      var light = new THREE.DirectionalLight(0xc4c4c4, 1);
+      light.position.set(-8, 3, 0);
       scene.add(light);
     },
     deathstar: () => {
@@ -193,11 +196,8 @@ const Moon = () => {
   };
 
   const getData = async () => {
-    const wData = await wiki()
-      .page(celestialType)
-      .then((page) => page.summary());
-    console.log(wData);
-    setData(wData.split("\n"));
+    const data = Info[celestialType];
+    setData(data);
   };
 
   const loadCelestialBody = () => {
@@ -226,18 +226,19 @@ const Moon = () => {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(
-      30,
+      10,
       window.innerWidth / window.innerHeight,
       1,
       1000
     );
-    camera.position.set(0, 0, 2);
+    camera.position.set(0, 0, 5);
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    const control = new OrbitControls(camera, renderer.domElement);
+    orbitControls = new OrbitControls(camera, renderer.domElement);
+    orbitControls.minDistance = 2;
 
     document.querySelector("#canvas").appendChild(renderer.domElement);
 
@@ -257,7 +258,7 @@ const Moon = () => {
     bloomComposer.addPass(renderScene);
     bloomComposer.addPass(bloomPass);
 
-    const starGeometry = new THREE.SphereGeometry(80, 64, 64);
+    const starGeometry = new THREE.SphereGeometry(80, 64, 20);
     const starMaterial = new THREE.MeshBasicMaterial({
       map: new THREE.TextureLoader().load("../../assets/galaxy1.png"),
       side: THREE.BackSide,
@@ -288,7 +289,7 @@ const Moon = () => {
 
   useEffect(() => {
     if (click) {
-      while (scene.children.length > 0) {
+      while (scene?.children.length > 0) {
         scene.remove(scene.children[0]);
       }
       setClick(false);
@@ -296,28 +297,54 @@ const Moon = () => {
   }, [click]);
 
   return (
-    <div className="model-container absolute w-full h-full top-0 z-10">
-      <div id="canvas" className="canvas absolute"></div>
-      <div className="title text-white absolute top-5 right-5">
-        {celestialType}
-      </div>
-      <div className={`${celestialType} data flex items-center justify-around`}>
+    <div className={`model-container ${isLoading && "flex items-center justify-center"} absolute w-full h-full top-0 z-10`}>
+      <div id="canvas" className={`canvas absolute ${isLoading&& "hidden"}`}></div>
+      {!isLoading ? (
         <div
-          className="text-3xl cursor-pointer arrow px-3"
-          onClick={toggleData}
+          className={`${celestialType} data flex items-center flex-col justify-around`}
         >
-          &gt;
+          <div
+            className="text-3xl cursor-pointer arrow px-3"
+            onClick={toggleData}
+          >
+            &gt;
+          </div>
+          <div className="data-wrapper">
+            <div className="my-5">
+              <h1 className="">{celestialType}</h1>
+              {data?.["description"].map((d) => {
+                return (
+                  <p key={d} className="my-2 text-sm">
+                    {d}
+                  </p>
+                );
+              })}
+            </div>
+            {data?.["dist-sun"] && (
+              <div className="my-5">
+                <h1>Distance from Sun</h1>
+                <p className="my-2 text-sm">approx. {data?.["dist-sun"]} Mi</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="data-wrapper">
-          {data?.map((d) => {
-            return (
-              <p key={d} className="my-2 text-sm">
-                {d}
-              </p>
-            );
-          })}
+      ) : (
+        <div className="infinity-loader flex">
+          <div className="parts">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

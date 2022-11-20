@@ -1,0 +1,16 @@
+$div: 100
+$sec: 0s
+@for $i from 1 through $div
+    .infinity-loader .parts div:nth-child(#{$i})
+        animation-delay: $sec
+    $sec: $sec + .1s
+
+@keyframes wave
+    0%
+        scale: 0
+        transform: rotateZ(40deg)
+    50%
+        scale: 1
+    100%
+        scale: 0
+

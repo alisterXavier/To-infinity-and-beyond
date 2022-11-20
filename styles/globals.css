@@ -40,7 +40,7 @@ a {
   font-family: "Blaa1";
   font-size: 20px;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   opacity: 1;
   z-index: 2;
   overflow: hidden;
@@ -51,18 +51,23 @@ a {
 }
 .container nav{
   position: relative;
-  z-index: 99;
+  z-index: 90;
 }
 .container nav ul li{
   transition: text-shadow 500ms ease;
 }
-.container nav ul li:hover{
+.container nav ul li p:hover{
   text-shadow: 1px 1px 15px white;
 }
 .container nav ul li:active{
   transform: scale(.98);
 }
-
+.container nav ul .celesHover .celesOptions{
+  display: none;
+}
+.container nav ul .celesHover:hover .celesOptions{
+  display: block;
+}
 
 .celestial-body{
   width: 300px;
@@ -88,22 +93,19 @@ canvas{
   width: 100%;
   height: 100%;
 }
-.title{
-  z-index: 2;
-}
 
 .data{
-  position: absolute;
-  z-index: 1;
-  top: 10%;
+  position: fixed;
+  z-index: 99;
   left: auto;
+  top: 5%;  
+  left: 0%;
   right: 0%;
   bottom: 0%;
-  width: 1000px;
   padding: 20px;
   overflow: scroll;
   backdrop-filter: blur(5px);
-  transition: right 500ms ease;
+  transition: top 500ms ease;
 }
 .data::before{
   content: "";
@@ -113,18 +115,11 @@ canvas{
   left: 0%;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.13);
+  background-color: rgba(24, 24, 24, 0.13);
   filter: blur(10px)
 }
 .data.unactive{
-  right:-61%
-}
-.data.mercury, .data.saturn, .data.uranus, .data.neptune, .data.deathstar{
-  flex-direction: row-reverse;
-  right: 35%;
-}
-.data.mercury.unactive, .data.saturn.unactive, .data.uranus.unactive, .data.neptune.unactive, .data.deathstar.unactive{
-  right: 96%;
+  top:90%
 }
 .data-wrapper{
   width: 95%;
@@ -135,14 +130,26 @@ canvas{
   flex-direction: column;
 }
 .arrow{
+  rotate: 90deg;
   transition: rotate 500ms ease;
 }
 .data.unactive .arrow{
-  rotate: 180deg;
+  rotate: 270deg;
 }
-.data.mercury .arrow, .data.saturn .arrow, .data.uranus .arrow, .data.neptune .arrow, .data.deathstar .arrow{
-  rotate: 180deg;
+
+.infinity-loader .parts{
+  width: 400px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.data.mercury.unactive .arrow, .data.saturn.unactive .arrow, .data.uranus.unactive .arrow, .data.neptune.unactive .arrow, .data.deathstar.data.unactive .arrow{
-  rotate: 0deg;
+.infinity-loader .parts div{
+  width: 3px;
+  height: 50px;
+  background: linear-gradient(to bottom, white, aqua);
+  margin: 5px;
+  border-radius: 20px;
+  scale: 0;
+  animation: wave 1s infinite;
 }
