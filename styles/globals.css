@@ -98,7 +98,6 @@ canvas{
   left: 0%;
   right: 0%;
   bottom: 0%;
-  padding: 20px;
   overflow: scroll;
   backdrop-filter: blur(5px);
   transition: top 500ms ease;

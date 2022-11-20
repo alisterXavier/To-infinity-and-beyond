@@ -310,10 +310,10 @@ const Celestial = () => {
       ></div>
       {!isLoading ? (
         <div
-          className={`${celestialType} data flex items-center flex-col justify-around`}
+          className={`${celestialType} data flex items-center flex-col justify-around p-2 lg:p-5`}
         >
           <div
-            className="text-3xl cursor-pointer arrow px-1 lg:px-3"
+            className="text-3xl cursor-pointer arrow lg:px-3"
             onClick={toggleData}
           >
             &gt;
@@ -321,7 +321,7 @@ const Celestial = () => {
           <div className="data-wrapper">
             <div className="my-5">
               <h1 className="">{celestialType}</h1>
-              {data?.["description"].map((d) => {
+              {data?.["description"].map((d) => { 
                 return (
                   <p key={d} className="my-2 text-sm">
                     {d}
