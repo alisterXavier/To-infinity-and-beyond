@@ -107,13 +107,14 @@ const Moon = () => {
       gltfModel.scale.set(0.003, 0.003, 0.003);
     },
     earth: () => {
-      gltfModel.scale.set(0.004, 0.004, 0.004);
 
-      var light = new THREE.DirectionalLight(0xc4c4c4, 0.5);
+      gltfModel.scale.set(0.3, 0.3, 0.3);
+
+      var light = new THREE.DirectionalLight(0xc4c4c4, .5);
       light.position.set(0, 0, 5);
       scene.add(light);
 
-      var alight = new THREE.AmbientLight(0xc4c4c4, 2.2);
+      var alight = new THREE.AmbientLight(0xc4c4c4, 2);
       scene.add(alight);
     },
     mercury: () => {
@@ -125,9 +126,9 @@ const Moon = () => {
       scene.add(light);
     },
     venus: () => {
-      gltfModel.scale.set(0.004, 0.004, 0.004);
+      gltfModel.scale.set(0.4, 0.4, 0.4);
 
-      var alight = new THREE.AmbientLight(0xc4c4c4, 0.3);
+      var alight = new THREE.AmbientLight(0xc4c4c4, .5);
       scene.add(alight);
 
       var light = new THREE.PointLight(0xc4c4c4, 1.8);
@@ -135,17 +136,16 @@ const Moon = () => {
       scene.add(light);
     },
     mars: () => {
-      camera.position.set(0, 0, 20);
-      gltfModel.position.set(-4, -3, 10);
-      gltfModel.scale.set(3, 3, 3);
+      gltfModel.position.set(-.5, -.5, 0);
+      gltfModel.scale.set(.5, .5, .5);
       var light = new THREE.PointLight(0xc4c4c4, 5.5);
       light.position.set(17, -5, 0);
       scene.add(light);
-      const alight = new THREE.AmbientLight(0x7e7e7e, 0.3); // soft white light
+      const alight = new THREE.AmbientLight(0x7e7e7e, .5); // soft white light
       scene.add(alight);
     },
     jupiter: () => {
-      gltfModel.scale.set(0.0006, 0.0006, 0.0006);
+      gltfModel.scale.set(0.03, 0.03, 0.03);
       var light = new THREE.PointLight(0xc4c4c4, 3.5);
       light.position.set(0.5, 0, 1);
       scene.add(light);
@@ -201,10 +201,9 @@ const Moon = () => {
   };
 
   const loadCelestialBody = () => {
-    const draco = new DRACOLoader();
     loader = new GLTFLoader();
 
-    loader.load(`../../assets/Models/${celestialType}/blackhole2.0.glb`, (gltf) => {
+    loader.load(`../../assets/Models/${celestialType}/scene.gltf`, (gltf) => {
       gltfModel = gltf.scene;
       scene.add(gltf.scene);
       renderer.render(scene, camera);
