@@ -22,7 +22,7 @@ const Moon = () => {
   const router = useRouter();
   const { ClickEvent, Title } = useContext(nav);
   const [click, setClick] = ClickEvent;
-  const [celestialType, setCelestialType] = Title;
+  const [celestialType, setCelestialType] = useState(router?.query.celestial);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -205,16 +205,12 @@ const Moon = () => {
     loader.load(`../../assets/Models/${celestialType}/scene.gltf`, (gltf) => {
       console.log("enter");
       gltfModel = gltf.scene;
-      console.log("gltf");
       scene.add(gltf.scene);
-      console.log("gltf added");
       renderer.render(scene, camera);
-      console.log("gltf rendered");
       console.log(`${celestialType} Loaded`);
       setIsLoading(false);
       extraLoaders[celestialType]();
       animate();
-      console.log("load");
     });
   };
 
@@ -285,7 +281,6 @@ const Moon = () => {
       getData();
       init();
       loadCelestialBody();
-      console.log("line below load")
     } else {
       setCelestialType(sessionStorage.getItem("celestial"));
     }
