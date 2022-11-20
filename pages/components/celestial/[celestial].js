@@ -304,15 +304,12 @@ const Moon = () => {
 
   return (
     <div
-      className={`model-container ${
-        isLoading && "flex items-center justify-center"
-      } absolute w-full h-full top-0 z-10`}
+      className={`model-container  absolute w-full h-full top-0 z-10`}
     >
       <div
         id="canvas"
-        className={`canvas absolute ${isLoading && "hidden"}`}
+        className={`canvas absolute`}
       ></div>
-      {!isLoading ? (
         <div
           className={`${celestialType} data flex items-center flex-col justify-around`}
         >
@@ -341,23 +338,6 @@ const Moon = () => {
             )}
           </div>
         </div>
-      ) : (
-        <div className="infinity-loader flex">
-          <div className="parts">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
