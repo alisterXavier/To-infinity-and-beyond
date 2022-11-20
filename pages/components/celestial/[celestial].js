@@ -19,7 +19,7 @@ var renderer,
   bloomComposer,
   loader,
   orbitControls;
-const Moon = () => {
+const Celestial = () => {
   const router = useRouter();
   const { ClickEvent, Title } = useContext(nav);
   const [click, setClick] = ClickEvent;
@@ -104,7 +104,7 @@ const Moon = () => {
     sun: () => {
       camera.position.set(0, 0, 50);
       orbitControls.minDistance = 10;
-      gltfModel.scale.set(0.003, 0.003, 0.003);
+      gltfModel.scale.set(0.2, 0.2, 0.2);
     },
     earth: () => {
 
@@ -126,6 +126,7 @@ const Moon = () => {
       scene.add(light);
     },
     venus: () => {
+      gltfModel.position.set(0, -.35, 0);
       gltfModel.scale.set(0.4, 0.4, 0.4);
 
       var alight = new THREE.AmbientLight(0xc4c4c4, .5);
@@ -357,4 +358,4 @@ const Moon = () => {
   );
 };
 
-export default Moon;
+export default Celestial;
