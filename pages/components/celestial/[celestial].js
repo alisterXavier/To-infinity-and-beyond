@@ -201,21 +201,21 @@ const Moon = () => {
 
   const loadCelestialBody = () => {
     console.log("load");
-    // loader = new GLTFLoader();
-    // loader.load(`../../assets/Models/${celestialType}/scene.gltf`, (gltf) => {
-    //   console.log("enter");
-    //   gltfModel = gltf.scene;
-    //   console.log("gltf");
-    //   scene.add(gltf.scene);
-    //   console.log("gltf added");
-    //   renderer.render(scene, camera);
-    //   console.log("gltf rendered");
-    //   console.log(`${celestialType} Loaded`);
-    //   setIsLoading(false);
-    //   extraLoaders[celestialType]();
-    //   animate();
-    //   console.log("load");
-    // });
+    loader = new GLTFLoader();
+    loader.load(`../../assets/Models/${celestialType}/scene.gltf`, (gltf) => {
+      console.log("enter");
+      gltfModel = gltf.scene;
+      console.log("gltf");
+      scene.add(gltf.scene);
+      console.log("gltf added");
+      renderer.render(scene, camera);
+      console.log("gltf rendered");
+      console.log(`${celestialType} Loaded`);
+      setIsLoading(false);
+      extraLoaders[celestialType]();
+      animate();
+      console.log("load");
+    });
   };
 
   const animate = () => {

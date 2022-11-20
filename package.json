@@ -17,9 +17,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.56.1",
-    "three": "^0.146.0",
-    "threejs-object-controls": "^1.2.8",
-    "wikijs": "^6.4.0"
+    "three": "^0.146.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
