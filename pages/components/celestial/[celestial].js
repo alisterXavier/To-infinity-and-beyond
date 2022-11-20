@@ -198,6 +198,7 @@ const Moon = () => {
   const getData = async () => {
     const data = Info[celestialType];
     setData(data);
+    console.log("data");
   };
 
   const loadCelestialBody = () => {
@@ -210,6 +211,7 @@ const Moon = () => {
       setIsLoading(false);
       extraLoaders[celestialType]();
       animate();
+      console.log("load");
     });
   };
 
@@ -268,6 +270,8 @@ const Moon = () => {
     // galaxy mesh
     starMesh = new THREE.Mesh(starGeometry, starMaterial);
     scene.add(starMesh);
+
+    console.log("init");
   };
 
   const toggleData = (e) => {
@@ -277,7 +281,6 @@ const Moon = () => {
 
   useEffect(() => {
     if (celestialType) {
-      console.log("qwerty")
       getData();
       init();
       loadCelestialBody();
@@ -298,8 +301,15 @@ const Moon = () => {
   }, [click]);
 
   return (
-    <div className={`model-container ${isLoading && "flex items-center justify-center"} absolute w-full h-full top-0 z-10`}>
-      <div id="canvas" className={`canvas absolute ${isLoading&& "hidden"}`}></div>
+    <div
+      className={`model-container ${
+        isLoading && "flex items-center justify-center"
+      } absolute w-full h-full top-0 z-10`}
+    >
+      <div
+        id="canvas"
+        className={`canvas absolute ${isLoading && "hidden"}`}
+      ></div>
       {!isLoading ? (
         <div
           className={`${celestialType} data flex items-center flex-col justify-around`}
